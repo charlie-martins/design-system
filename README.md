@@ -1,27 +1,23 @@
 # @charlie-martins/design-system
 
-Centralised design system for Charlie Martins' projects — shared React components, built and documented with [Storybook](https://storybook.js.org/), styled with [Tailwind CSS](https://tailwindcss.com/), and published as a private npm package.
+Centralised design system for Charlie Martins' projects — shared React components, styled with Tailwind CSS + shadcn/ui, published as a private npm package.
+
+The repo itself doubles as its own documentation: `npm run dev` runs a single-page showcase (sidebar nav, search, live components, a real light/dark toggle) instead of a separate tool like Storybook — the page *is* the deliverable.
 
 ## Development
 
 ```bash
 npm install
-npm run dev         # demo app at localhost:5173
-npm run storybook   # component explorer at localhost:6006
+npm run dev   # showcase page at localhost:5173
 ```
 
 ## Adding a component
 
-Each component lives in its own folder under `src/components/<Name>/`:
+Components live under `src/components/ui/` (added via `npx shadcn add <name>`, which respects `components.json`) or hand-written under `src/components/` for anything else (e.g. `theme-provider.tsx`).
 
-```
-src/components/Button/
-  Button.tsx          # implementation
-  Button.stories.tsx  # Storybook stories
-  index.ts            # public exports
-```
-
-Export it from `src/index.ts` so it's part of the published package.
+1. Add the component.
+2. Export it from `src/index.ts` so it's part of the published package.
+3. Add it to the showcase: a nav entry in `nav` and a `<Section>` in `src/App.tsx`.
 
 ## Building
 
@@ -29,11 +25,11 @@ Export it from `src/index.ts` so it's part of the published package.
 npm run build
 ```
 
-Outputs ESM + CJS bundles and type declarations to `dist/`.
+Outputs ESM + CJS bundles and type declarations to `dist/`. React and the component-level dependencies (`radix-ui`, `lucide-react`, `class-variance-authority`, `cn`) stay external — check `vite.config.ts`'s `rollupOptions.external` when adding a new runtime dependency, or it'll get bundled into the package instead of installed alongside it.
 
 ## Using this package in another project
 
-This package ships **unstyled-by-default Tailwind utility classes** rather than a compiled stylesheet — consuming projects must scan this package's `dist/` output with their own Tailwind config:
+Components use Tailwind utility classes rather than a compiled stylesheet — consuming projects must scan this package's `dist/` output with their own Tailwind config:
 
 ```js
 // tailwind.config.js of the consuming project
@@ -43,18 +39,15 @@ export default {
     './src/**/*.{js,ts,jsx,tsx}',
     './node_modules/@charlie-martins/design-system/dist/**/*.{js,mjs}',
   ],
-  // ...
 };
 ```
-
-Then install and import as normal:
 
 ```bash
 npm install @charlie-martins/design-system
 ```
 
 ```tsx
-import { Button } from '@charlie-martins/design-system';
+import { Button, ThemeProvider } from '@charlie-martins/design-system';
 ```
 
 ## Publishing

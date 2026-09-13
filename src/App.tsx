@@ -96,7 +96,7 @@ function App() {
           </div>
         </header>
 
-        <div className="ml-auto flex max-w-5xl">
+        <div className="mr-auto flex max-w-5xl">
           {/* SIDEBAR */}
           <aside className="border-border sticky top-[49px] h-[calc(100vh-49px)] w-52 shrink-0 overflow-y-auto border-r px-4 py-6">
             <div className="relative mb-5">
@@ -211,7 +211,7 @@ function App() {
           </main>
         </div>
 
-        <footer className="border-border text-muted-foreground border-t px-6 py-8 text-right font-mono text-xs">
+        <footer className="border-border text-muted-foreground border-t px-6 py-8 text-left font-mono text-xs">
           @charlie-martins/design-system
         </footer>
       </div>

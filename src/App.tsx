@@ -3,6 +3,7 @@ import { Search } from 'lucide-react';
 import { Button } from './components/ui/button';
 import { Input } from './components/ui/input';
 import { ModeToggle } from './components/mode-toggle';
+import { PaletteSwitcher } from './components/palette-switcher';
 import { ThemeProvider } from './components/theme-provider';
 
 const colorTokens = [
@@ -82,14 +83,17 @@ function App() {
   }, [query]);
 
   return (
-    <ThemeProvider defaultTheme="system" storageKey="design-system-theme">
+    <ThemeProvider defaultMode="system" defaultPalette="mustard" storageKey="design-system-theme">
       <div className="bg-background text-foreground min-h-screen">
         {/* TOP BAR */}
         <header className="border-border bg-background/90 sticky top-0 z-10 flex items-center justify-between border-b px-6 py-3 backdrop-blur">
           <div className="font-mono text-sm font-medium">
             <span className="text-primary">{'{}'}</span> heyitscharlie / design-system
           </div>
-          <ModeToggle />
+          <div className="flex items-center gap-2">
+            <PaletteSwitcher />
+            <ModeToggle />
+          </div>
         </header>
 
         <div className="mx-auto flex max-w-5xl">

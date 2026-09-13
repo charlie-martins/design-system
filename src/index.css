@@ -29,6 +29,12 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  /* Accent used AS text/stroke/ring — never raw --primary. Raw accent is
+   * full-saturation and reserved for solid fills (button backgrounds,
+   * glows); as text it frequently fails contrast. --brand-ink is a
+   * ramp step tuned per ground (light step on dark, deep step on light)
+   * that clears AA — see the palette blocks below. */
+  --color-brand-ink: var(--brand-ink);
 
   --font-sans: var(--palette-font-body);
   --font-mono: var(--palette-font-mono);
@@ -70,7 +76,9 @@
   --accent-foreground: #151514;
   --border: color-mix(in srgb, #151514 12%, transparent);
   --input: color-mix(in srgb, #151514 12%, transparent);
-  --ring: #f2b949;
+  --ring: var(--brand-ink);
+  /* accent-800 — accent-700 measures ~2.9:1 on this ground (fails AA); accent-800 clears 4.5:1 */
+  --brand-ink: #8f630a;
 }
 
 .dark {
@@ -90,7 +98,9 @@
   --accent-foreground: #f5f5f4;
   --border: color-mix(in srgb, #f5f5f4 12%, transparent);
   --input: color-mix(in srgb, #f5f5f4 12%, transparent);
-  --ring: #f2b949;
+  --ring: var(--brand-ink);
+  /* accent-300 — the lighter ramp step reads on a dark ground */
+  --brand-ink: #f8dba0;
 }
 
 /* ---- space ---- */
@@ -116,7 +126,9 @@
   --accent-foreground: #17162a;
   --border: color-mix(in srgb, #17162a 12%, transparent);
   --input: color-mix(in srgb, #17162a 12%, transparent);
-  --ring: #a710f9;
+  --ring: var(--brand-ink);
+  /* accent-800 — accent-700 measures under AA on this ground; accent-800 clears ~14:1 */
+  --brand-ink: #4b0372;
 }
 
 .dark[data-palette='space'] {
@@ -136,7 +148,9 @@
   --accent-foreground: #0f0d16;
   --border: color-mix(in srgb, #f4f3f8 12%, transparent);
   --input: color-mix(in srgb, #f4f3f8 12%, transparent);
-  --ring: #a710f9;
+  --ring: var(--brand-ink);
+  /* accent-300 — the lighter ramp step reads on a dark ground */
+  --brand-ink: #d183fc;
 }
 
 @layer base {

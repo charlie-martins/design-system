@@ -12,6 +12,7 @@ const colorTokens = [
   { name: 'card', var: '--card' },
   { name: 'popover', var: '--popover' },
   { name: 'primary', var: '--primary' },
+  { name: 'brand-ink', var: '--brand-ink' },
   { name: 'secondary', var: '--secondary' },
   { name: 'muted', var: '--muted' },
   { name: 'accent', var: '--accent' },
@@ -48,7 +49,7 @@ const nav = [
 
 function GroupEyebrow({ children }: { children: React.ReactNode }) {
   return (
-    <div className="text-primary mt-12 mb-2 font-mono text-xs tracking-wide first:mt-0">
+    <div className="text-brand-ink mt-12 mb-2 font-mono text-xs tracking-wide first:mt-0">
       {children}
     </div>
   );
@@ -91,7 +92,7 @@ function App() {
         {/* TOP BAR */}
         <header className="border-border bg-background/90 sticky top-0 z-10 flex items-center justify-between border-b px-6 py-3 backdrop-blur">
           <div className="font-mono text-sm font-medium">
-            <span className="text-primary">{'{}'}</span> heyitscharlie / design-system
+            <span className="text-brand-ink">{'{}'}</span> heyitscharlie / design-system
           </div>
           <div className="flex items-center gap-2">
             <PaletteSwitcher />

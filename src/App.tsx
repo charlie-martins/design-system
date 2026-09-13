@@ -46,23 +46,26 @@ const nav = [
   },
 ];
 
+function GroupEyebrow({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="text-primary mt-12 mb-2 font-mono text-xs tracking-wide first:mt-0">
+      {children}
+    </div>
+  );
+}
+
 function Section({
   id,
   title,
-  eyebrow,
   children,
 }: {
   id: string;
   title: string;
-  eyebrow: string;
   children: React.ReactNode;
 }) {
   return (
-    <section id={id} className="border-t border-border py-12 first:border-t-0 first:pt-0 scroll-mt-20">
-      <div className="mb-6">
-        <div className="text-primary text-xs font-mono tracking-wide">{eyebrow}</div>
-        <h2 className="mt-1 text-xl font-medium">{title}</h2>
-      </div>
+    <section id={id} className="border-t border-border py-8 first:border-t-0 first:pt-0 scroll-mt-20">
+      <h2 className="mb-6 text-xl font-medium">{title}</h2>
       {children}
     </section>
   );
@@ -96,8 +99,8 @@ function App() {
           </div>
         </header>
 
-        <div className="mr-auto flex max-w-5xl">
-          {/* SIDEBAR */}
+        <div className="flex">
+          {/* SIDEBAR — pinned to the left edge */}
           <aside className="border-border sticky top-[49px] h-[calc(100vh-49px)] w-52 shrink-0 overflow-y-auto border-r px-4 py-6">
             <div className="relative mb-5">
               <Search className="text-muted-foreground pointer-events-none absolute left-2 top-1/2 size-3.5 -translate-y-1/2" />
@@ -134,80 +137,86 @@ function App() {
             </nav>
           </aside>
 
-          {/* CONTENT */}
+          {/* CONTENT — fills the remaining width, centered within it */}
           <main className="min-w-0 flex-1 px-8 py-12">
-            <div className="mb-12">
-              <h1 className="text-3xl font-semibold tracking-tight">Design System</h1>
-              <p className="text-muted-foreground mt-3 max-w-xl text-[15px]">
-                Shared React components for future projects — built on Tailwind
-                CSS variables and shadcn/ui primitives. This page is the whole
-                deliverable: the live components, styled by the real tokens
-                below, in whichever theme you prefer.
-              </p>
+            <div className="mx-auto max-w-3xl">
+              <div className="mb-12">
+                <h1 className="text-3xl font-semibold tracking-tight">Design System</h1>
+                <p className="text-muted-foreground mt-3 max-w-xl text-[15px]">
+                  Shared React components for future projects — built on Tailwind
+                  CSS variables and shadcn/ui primitives. This page is the whole
+                  deliverable: the live components, styled by the real tokens
+                  below, in whichever theme you prefer.
+                </p>
+              </div>
+
+              <GroupEyebrow>01 — foundations</GroupEyebrow>
+
+              <Section id="color" title="Color">
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
+                  {colorTokens.map((token) => (
+                    <div key={token.name} className="flex flex-col gap-2">
+                      <div
+                        className="border-border h-14 rounded-md border"
+                        style={{ background: `var(${token.var})` }}
+                      />
+                      <div className="font-mono text-[11px] text-muted-foreground">{token.name}</div>
+                    </div>
+                  ))}
+                </div>
+              </Section>
+
+              <Section id="typography" title="Typography">
+                <div className="flex flex-col gap-4">
+                  {typeSamples.map((sample) => (
+                    <div key={sample.label} className="flex items-baseline gap-4">
+                      <span className="text-muted-foreground w-28 shrink-0 font-mono text-[11px]">
+                        {sample.label}
+                      </span>
+                      <span className={sample.className}>The quick brown fox jumps.</span>
+                    </div>
+                  ))}
+                </div>
+              </Section>
+
+              <Section id="spacing" title="Spacing">
+                <div className="flex flex-wrap items-end gap-4">
+                  {spacingTokens.map((step) => (
+                    <div key={step} className="flex flex-col items-center gap-2">
+                      <div className="bg-primary" style={{ width: `calc(var(--spacing) * ${step})`, height: '10px' }} />
+                      <div className="font-mono text-[11px] text-muted-foreground">{step}</div>
+                    </div>
+                  ))}
+                </div>
+              </Section>
+
+              <GroupEyebrow>02 — components</GroupEyebrow>
+
+              <Section id="button" title="Button">
+                <div className="flex flex-wrap items-center gap-3">
+                  <Button>Default</Button>
+                  <Button variant="outline">Outline</Button>
+                  <Button variant="secondary">Secondary</Button>
+                  <Button variant="ghost">Ghost</Button>
+                  <Button variant="destructive">Destructive</Button>
+                  <Button variant="link">Link</Button>
+                </div>
+                <div className="mt-4 flex flex-wrap items-center gap-3">
+                  <Button size="sm">Small</Button>
+                  <Button size="default">Default</Button>
+                  <Button size="lg">Large</Button>
+                  <Button disabled>Disabled</Button>
+                </div>
+              </Section>
+
+              <Section id="input" title="Input">
+                <div className="flex max-w-xs flex-col gap-3">
+                  <Input placeholder="Email address" type="email" />
+                  <Input placeholder="Disabled" disabled />
+                  <Input placeholder="Invalid" aria-invalid />
+                </div>
+              </Section>
             </div>
-
-            <Section id="color" eyebrow="01 — foundations" title="Color">
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
-                {colorTokens.map((token) => (
-                  <div key={token.name} className="flex flex-col gap-2">
-                    <div
-                      className="border-border h-14 rounded-md border"
-                      style={{ background: `var(${token.var})` }}
-                    />
-                    <div className="font-mono text-[11px] text-muted-foreground">{token.name}</div>
-                  </div>
-                ))}
-              </div>
-            </Section>
-
-            <Section id="typography" eyebrow="01 — foundations" title="Typography">
-              <div className="flex flex-col gap-4">
-                {typeSamples.map((sample) => (
-                  <div key={sample.label} className="flex items-baseline gap-4">
-                    <span className="text-muted-foreground w-28 shrink-0 font-mono text-[11px]">
-                      {sample.label}
-                    </span>
-                    <span className={sample.className}>The quick brown fox jumps.</span>
-                  </div>
-                ))}
-              </div>
-            </Section>
-
-            <Section id="spacing" eyebrow="01 — foundations" title="Spacing">
-              <div className="flex flex-wrap items-end gap-4">
-                {spacingTokens.map((step) => (
-                  <div key={step} className="flex flex-col items-center gap-2">
-                    <div className="bg-primary" style={{ width: `calc(var(--spacing) * ${step})`, height: '10px' }} />
-                    <div className="font-mono text-[11px] text-muted-foreground">{step}</div>
-                  </div>
-                ))}
-              </div>
-            </Section>
-
-            <Section id="button" eyebrow="02 — components" title="Button">
-              <div className="flex flex-wrap items-center gap-3">
-                <Button>Default</Button>
-                <Button variant="outline">Outline</Button>
-                <Button variant="secondary">Secondary</Button>
-                <Button variant="ghost">Ghost</Button>
-                <Button variant="destructive">Destructive</Button>
-                <Button variant="link">Link</Button>
-              </div>
-              <div className="mt-4 flex flex-wrap items-center gap-3">
-                <Button size="sm">Small</Button>
-                <Button size="default">Default</Button>
-                <Button size="lg">Large</Button>
-                <Button disabled>Disabled</Button>
-              </div>
-            </Section>
-
-            <Section id="input" eyebrow="02 — components" title="Input">
-              <div className="flex max-w-xs flex-col gap-3">
-                <Input placeholder="Email address" type="email" />
-                <Input placeholder="Disabled" disabled />
-                <Input placeholder="Invalid" aria-invalid />
-              </div>
-            </Section>
           </main>
         </div>
 
